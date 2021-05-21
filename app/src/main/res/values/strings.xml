@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TablesSchult</string>
+    <string name="start">Start</string>
+    <string name="exit">Exit</string>
+    <string name="settings">Settings</string>
+    <string name="title">Tables Schult</string>
+    <string name="titleimage">TitleImage</string>
+    <string name="input_your_name">Input your name</string>
+    <string name="records">Records</string>
+</resources>
