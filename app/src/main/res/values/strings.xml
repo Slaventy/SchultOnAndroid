@@ -7,4 +7,5 @@
     <string name="titleimage">TitleImage</string>
     <string name="input_your_name">Input your name</string>
     <string name="records">Records</string>
+    <string name="NewButton">NewButton</string>
 </resources>

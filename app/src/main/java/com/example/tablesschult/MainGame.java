@@ -2,18 +2,20 @@ package com.example.tablesschult;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 
 /**
  * Точка запуска игрового поля
@@ -37,6 +39,7 @@ public class MainGame extends AppCompatActivity {
 
         LinearLayout.LayoutParams lpView = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
+
         //получение информации об имени пользователя
         Intent intent = getIntent();
         String userName = "Your name: " + intent.getStringExtra(StartActivity.USER_NAME);
@@ -48,7 +51,9 @@ public class MainGame extends AppCompatActivity {
 
         //запуск музыкального сопровождения
         mediaPlayer = MediaPlayer.create(this, R.raw.musik);
+        mediaPlayer.setLooping(true);
         mediaPlayer.start();
+
 
         //запуск таймера
         chronometer = new Chronometer(this);
@@ -59,31 +64,49 @@ public class MainGame extends AppCompatActivity {
         chronometer.start();
         linLayout.addView(chronometer, lpView);
 
-        //кнопка
-        Button button = new Button(this);
-        button.setTextSize(20);
-        button.setOnClickListener(v->{
-            if (button.getText() == "button is On Click"){
-                button.setText(R.string.start);
-            }else {
-                button.setText(R.string.exit);
+
+        //создание разметки поля layout
+        TableLayout tableLayout = new TableLayout(this);        //таблица
+        tableLayout.setLayoutParams(new TableLayout.LayoutParams(
+                TableLayout.LayoutParams.WRAP_CONTENT,
+                TableLayout.LayoutParams.WRAP_CONTENT));                //параметры таблицы
+        tableLayout.setStretchAllColumns(true);                         //растянули
+
+
+        int[] numbers = MakeRandomMassive.rnd(9);               //массив случайных чисел
+        TableRow tableRow;
+        int count =0;
+        //строка
+        for (int i = 0; i < 3; i++){
+            tableRow = new TableRow(this);
+            for (int j = 0; j < 3; j++){
+                tableRow.addView(addFieldNumber(numbers[count++], this::press));
             }
-        });
-        linLayout.addView(button, lpView);
-
-        LinearLayout.LayoutParams leftMarginParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        leftMarginParams.leftMargin = 50;
-
-        Button button1 = new Button(this);
-        button1.setText(R.string.records);
-        linLayout.addView(button1, leftMarginParams);
-
-
-
-
+            tableLayout.addView(tableRow);
+        }
+        //добавим таблицу на экран
+        linLayout.addView(tableLayout);
 
 
     }
+
+    //если нажали кнопку
+    private void press(View view) {
+        String s = String.valueOf(view.getId());
+        Toast toast = Toast.makeText(view.getContext(), s,Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+
+    private Button addFieldNumber(int i, View.OnClickListener onClickListener){
+        Button button = new Button(this);
+        button.setId(i);
+        button.setText(String.valueOf(i));
+        button.setTextSize(20);
+        button.setOnClickListener(onClickListener);
+        return button;
+    }
+    
 
     @Override
     public void onDestroy() {
@@ -93,6 +116,7 @@ public class MainGame extends AppCompatActivity {
             stopPlay();
         }
     }
+
     private void stopPlay(){
         mediaPlayer.stop();
         try {
@@ -103,5 +127,4 @@ public class MainGame extends AppCompatActivity {
             Toast.makeText(this, t.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
 }
