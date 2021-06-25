@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,33 +23,28 @@ public class StartActivity extends AppCompatActivity {
         Button startButton = findViewById(R.id.start);
         Button recordButton = findViewById(R.id.setting);
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            //процедура выхода из программы
-            @Override
-            public void onClick(View v) {
-                finish();
-                System.exit(0);
-            }
+        //процедура выхода из программы
+        exitButton.setOnClickListener(v -> {
+            finish();
+            System.exit(0);
         });
+        recordButton.setOnClickListener(v -> Toast.makeText(this, "record", Toast.LENGTH_LONG));
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = editTextName.getText().toString();    //получение имени пользователя
-                CharSequence text = "please input name";    //сообщение
-                int duration = Toast.LENGTH_LONG;   //задержка для сообщения
+        startButton.setOnClickListener(v -> {
+            String name = editTextName.getText().toString();    //получение имени пользователя
+            CharSequence text = "please input name";    //сообщение
+            int duration = Toast.LENGTH_LONG;   //задержка для сообщения
 
-                //проверка на наличие имени пользователя
-                if (name.length() > 0){
-                    //создание игрового окна - ТОЧКА ВХОДА
-                    Intent intent =new Intent(v.getContext(), MainGame.class);
-                    intent.putExtra(USER_NAME, name);
-                    startActivity(intent);
-                } else {
-                    //если имя не введено выводится сообщение
-                    Toast toast = Toast.makeText(v.getContext(), text, duration);
-                    toast.show();
-                }
+            //проверка на наличие имени пользователя
+            if (name.length() > 0){
+                //создание игрового окна - ТОЧКА ВХОДА
+                Intent intent =new Intent(v.getContext(), MainGame.class);
+                intent.putExtra(USER_NAME, name);
+                startActivity(intent);
+            } else {
+                //если имя не введено выводится сообщение
+                Toast toast = Toast.makeText(v.getContext(), text, duration);
+                toast.show();
             }
         });
     }
