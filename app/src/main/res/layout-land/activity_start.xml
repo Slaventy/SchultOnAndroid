@@ -80,7 +80,7 @@
         android:layout_width="180dp"
         android:layout_height="60dp"
         android:gravity="center"
-        android:text="@string/records"
+        android:text="@string/progress"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintTop_toBottomOf="@+id/start" />
 

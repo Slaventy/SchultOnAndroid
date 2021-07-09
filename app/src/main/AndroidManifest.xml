@@ -17,5 +17,7 @@
         </activity>
         <activity android:name=".MainGame">
         </activity>
+        <activity android:name=".RecordsActivity">
+        </activity>
     </application>
 </manifest>

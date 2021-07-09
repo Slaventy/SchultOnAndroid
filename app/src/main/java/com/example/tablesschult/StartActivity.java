@@ -2,11 +2,14 @@ package com.example.tablesschult;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 
 
 public class StartActivity extends AppCompatActivity {
@@ -17,7 +20,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-
+        //переменные и объекты
         final EditText editTextName = findViewById(R.id.editText);
         Button exitButton = findViewById(R.id.button);
         Button startButton = findViewById(R.id.start);
@@ -25,11 +28,17 @@ public class StartActivity extends AppCompatActivity {
 
         //процедура выхода из программы
         exitButton.setOnClickListener(v -> {
-            finish();
-            System.exit(0);
+            openQuitDialog();
         });
-        recordButton.setOnClickListener(v -> Toast.makeText(this, "record", Toast.LENGTH_LONG));
 
+        //вывод таблицы рекордов
+        recordButton.setOnClickListener(v -> {
+            //создание  окна рекордов - ВХОД
+            Intent intentRecords =new Intent(v.getContext(), RecordsActivity.class);
+            startActivity(intentRecords);
+        });
+
+        //запуск игровой сессии
         startButton.setOnClickListener(v -> {
             String name = editTextName.getText().toString();    //получение имени пользователя
             CharSequence text = "please input name";    //сообщение
@@ -47,5 +56,38 @@ public class StartActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+
+        //получаем
     }
+
+    //кнопка назад
+    @Override
+    public void onBackPressed(){
+        //super.onBackPressed();
+        openQuitDialog();
+    }
+
+    //кнопка назад или выход
+    private void openQuitDialog(){
+        AlertDialog.Builder quitDialog = new AlertDialog.Builder(
+                this);
+        quitDialog.setTitle("Выход: Вы уверены?");
+
+        quitDialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        quitDialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        quitDialog.show();
+    }
+
 }

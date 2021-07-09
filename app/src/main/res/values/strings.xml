@@ -6,6 +6,9 @@
     <string name="title">Tables Schult</string>
     <string name="titleimage">TitleImage</string>
     <string name="input_your_name">Input your name</string>
-    <string name="records">Records</string>
+    <string name="progress">Progress</string>
     <string name="NewButton">NewButton</string>
+    <string name="todo">TODO</string>
+    <string name="user_name">User Name</string>
+    <string name="best_time">Best time</string>
 </resources>
